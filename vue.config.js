@@ -48,6 +48,7 @@ module.exports = {
     output: {
       filename: 'js/[name].js',
     },
+    devtool: 'cheap-module-source-map',
     plugins,
   },
   // 配置 content.css
