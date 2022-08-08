@@ -1,3 +1,4 @@
+/* eslint-disable */
 //热加载
 const filesInDirectory = dir =>
   new Promise(resolve =>
@@ -22,17 +23,17 @@ const timestampForFilesInDirectory = dir =>
  
 // 刷新当前活动页
 const reload = () => {
-  window.chrome.tabs.query({
+  chrome.tabs.query({
       active: true,
       currentWindow: true
     },
     tabs => {
       // NB: see https://github.com/xpl/crx-hotreload/issues/5
       if (tabs[0]) {
-        window.chrome.tabs.reload(tabs[0].id);
+        chrome.tabs.reload(tabs[0].id);
       }
       // 强制刷新页面
-      window.chrome.runtime.reload();
+      chrome.runtime.reload();
     }
   );
 };
@@ -51,10 +52,10 @@ const watchChanges = (dir, lastTimestamp) => {
 };
  
 const hotReload = () => {
-  window.chrome.management.getSelf(self => {
+  chrome.management.getSelf(self => {
     if (self.installType === 'development') {
       // 获取插件目录，监听文件变化
-      window.chrome.runtime.getPackageDirectoryEntry(dir => watchChanges(dir));
+      chrome.runtime.getPackageDirectoryEntry(dir => watchChanges(dir));
     }
   });
 };
